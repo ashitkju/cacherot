@@ -1,9 +1,8 @@
 package com.h3rmit.cache;
 
-import com.h3rmit.cache.type.Cache;
-import com.h3rmit.cache.enums.CacheType;
-import com.h3rmit.cache.type.impl.DatabaseCache;
-import com.h3rmit.cache.type.impl.HashMapCache;
+import com.h3rmit.cache.cachingtypes.Cache;
+import com.h3rmit.cache.cachingtypes.impl.DatabaseCache;
+import com.h3rmit.cache.cachingtypes.impl.HashMapCache;
 
 public class SingletonCacheFactory {
 
@@ -26,14 +25,14 @@ public class SingletonCacheFactory {
         return instance;
     }
 
-    public Cache getCacheInstance(CacheType type) {
+    public Cache getCacheInstance(CacheConfig config) {
         Cache cache = null;
-        switch (type) {
+        switch (config.cacheType()) {
             case DATABASE:
-                cache = new DatabaseCache();
+                cache = new DatabaseCache(config.evictionPolicyList());
                 break;
             default:
-                cache = new HashMapCache();
+                cache = new HashMapCache(config.evictionPolicyList());
         }
         return cache;
     }
