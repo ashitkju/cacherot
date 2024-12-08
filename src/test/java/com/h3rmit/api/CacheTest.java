@@ -9,7 +9,6 @@ import com.h3rmit.dto.CacheData;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
-import jakarta.ws.rs.core.MediaType;
 
 @QuarkusTest
 public class CacheTest {

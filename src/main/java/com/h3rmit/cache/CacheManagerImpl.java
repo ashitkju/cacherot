@@ -6,17 +6,19 @@ import java.util.Map;
 import com.h3rmit.cache.cachingtypes.Cache;
 import com.h3rmit.cache.enums.CacheType;
 
-public class CacheManagerImpl implements CacheManager {
-    private final Map<CacheType, Cache> cacheStore;
+public class CacheManagerImpl<K, V> implements CacheManager<K, V> {
+    private final Map<CacheType, Cache<K, V>> cacheStore;
+    @SuppressWarnings("rawtypes")
     private final SingletonCacheFactory cacheFactory;
 
-    private CacheManagerImpl(SingletonCacheFactory cacheFactory) {
+    private CacheManagerImpl(@SuppressWarnings("rawtypes") SingletonCacheFactory cacheFactory) {
         cacheStore = new HashMap<>();
         this.cacheFactory = cacheFactory;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Cache getCacheInstance(CacheConfig cacheConfig) {
+    public Cache<K, V> getCacheInstance(CacheConfig<K, V> cacheConfig) {
         if (cacheStore.keySet().contains(cacheConfig.cacheType())) {
             return cacheStore.get(cacheConfig.cacheType());
         }

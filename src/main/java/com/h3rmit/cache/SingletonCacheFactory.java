@@ -4,8 +4,9 @@ import com.h3rmit.cache.cachingtypes.Cache;
 import com.h3rmit.cache.cachingtypes.impl.DatabaseCache;
 import com.h3rmit.cache.cachingtypes.impl.HashMapCache;
 
-public class SingletonCacheFactory {
+public class SingletonCacheFactory<K, V> {
 
+    @SuppressWarnings("rawtypes")
     private static volatile SingletonCacheFactory instance;
 
     private SingletonCacheFactory() {
@@ -14,6 +15,7 @@ public class SingletonCacheFactory {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public static SingletonCacheFactory getInstance() {
         if (instance == null) {
             synchronized(SingletonCacheFactory.class) {
@@ -25,14 +27,14 @@ public class SingletonCacheFactory {
         return instance;
     }
 
-    public Cache getCacheInstance(CacheConfig config) {
-        Cache cache = null;
+    public Cache<K, V> getCacheInstance(CacheConfig<K, V> config) {
+        Cache<K, V> cache = null;
         switch (config.cacheType()) {
             case DATABASE:
-                cache = new DatabaseCache(config.evictionPolicyList());
+                cache = new DatabaseCache<K, V>(config.evictionPolicyList());
                 break;
             default:
-                cache = new HashMapCache(config.evictionPolicyList());
+                cache = new HashMapCache<K, V>(config.evictionPolicyList());
         }
         return cache;
     }

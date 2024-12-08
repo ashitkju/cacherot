@@ -5,4 +5,4 @@ import java.util.List;
 import com.h3rmit.cache.enums.CacheType;
 import com.h3rmit.cache.eviction.EvictionPolicy;
 
-public record CacheConfig(CacheType cacheType, List<EvictionPolicy> evictionPolicyList) {}
+public record CacheConfig<K, V>(CacheType cacheType, List<EvictionPolicy<K, V>> evictionPolicyList) {}
